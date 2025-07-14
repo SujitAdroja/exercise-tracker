@@ -90,12 +90,28 @@ app.post("/api/users/:_id/exercises", async function (req, res) {
       ],
     });
     await log.save();
-    res.json(log);
+    res.json({
+      _id: req.params._id,
+      username: usr.username,
+      description: req.body.description,
+      duration: Number(req.body.duration),
+      date: req.body.date
+        ? req.body.date
+        : new Date().toISOString().split("T")[0],
+    });
   } else {
     oldLog = old.logs.push(newExecise);
     old.count = old.logs.length;
     const log = await logs.findByIdAndUpdate(req.params._id, { ...old });
-    res.json(log);
+    res.json({
+      _id: req.params._id,
+      username: usr.username,
+      description: req.body.description,
+      duration: Number(req.body.duration),
+      date: req.body.date
+        ? req.body.date
+        : new Date().toISOString().split("T")[0],
+    });
   }
 });
 
