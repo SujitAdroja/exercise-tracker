@@ -24,7 +24,7 @@ const logsSchema = new mongoose.Schema({
   _id: String,
   username: String,
   count: Number,
-  logs: [
+  log: [
     {
       description: String,
       duration: Number,
