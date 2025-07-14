@@ -81,7 +81,7 @@ app.post("/api/users/:_id/exercises", async function (req, res) {
       _id: req.params._id,
       username: usr.username,
       count: 1,
-      logs: [
+      log: [
         {
           description: req.body.description,
           duration: Number(req.body.duration),
@@ -100,8 +100,8 @@ app.post("/api/users/:_id/exercises", async function (req, res) {
         : new Date().toISOString().split("T")[0],
     });
   } else {
-    oldLog = old.logs.push(newExecise);
-    old.count = old.logs.length;
+    oldLog = old.log.push(newExecise);
+    old.count = old.log.length;
     const log = await logs.findByIdAndUpdate(req.params._id, { ...old });
     res.json({
       _id: req.params._id,
@@ -129,7 +129,7 @@ app.get("/api/users/:_id/logs", async (req, res) => {
 
     if (!user) return res.status(404).json({ error: "User not found" });
 
-    let newLogs = user.logs;
+    let newLogs = user.log;
 
     // Convert string dates to actual Date objects
     const fromDate = from ? new Date(from) : null;
