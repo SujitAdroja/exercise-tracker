@@ -117,6 +117,7 @@ app.post("/api/users/:_id/exercises", async function (req, res) {
 
 app.get("/api/logs/:_id", async function (req, res) {
   const log = await logs.findById(req.params._id);
+  console.log(log);
   res.json(log);
 });
 
@@ -154,7 +155,7 @@ app.get("/api/users/:_id/logs", async (req, res) => {
       _id: user._id,
       username: user.username,
       count: newLogs.length,
-      logs: newLogs.map((log) => ({
+      log: newLogs.map((log) => ({
         description: log.description,
         duration: log.duration,
         date: new Date(log.date).toDateString(),
