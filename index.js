@@ -67,6 +67,7 @@ app.post("/api/users/:_id/exercises", async function (req, res) {
   const usr = await user.findById(req.params._id);
 
   let old = await logs.findById(req.params._id);
+  console.log(old);
   let newExecise = {
     description: req.body.description,
     duration: Number(req.body.duration),
@@ -74,14 +75,12 @@ app.post("/api/users/:_id/exercises", async function (req, res) {
       ? req.body.date
       : new Date().toISOString().split("T")[0],
   };
-  oldLog = old.logs.push(newExecise);
-  old.count = old.logs.length;
-  console.log(old);
+
   if (!old) {
     const log = new logs({
       _id: req.params._id,
       username: usr.username,
-      count: 0,
+      count: 1,
       logs: [
         {
           description: req.body.description,
@@ -93,6 +92,8 @@ app.post("/api/users/:_id/exercises", async function (req, res) {
     await log.save();
     res.json(log);
   } else {
+    oldLog = old.logs.push(newExecise);
+    old.count = old.logs.length;
     const log = await logs.findByIdAndUpdate(req.params._id, { ...old });
     res.json(log);
   }
