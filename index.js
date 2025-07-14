@@ -10,14 +10,14 @@ app.use(express.urlencoded({ extended: true }));
 
 const exerciseSchema = new mongoose.Schema({
   _id: String,
-  userName: String,
+  username: String,
   description: String,
   duration: Number,
   date: String,
 });
 
 const userSchema = new mongoose.Schema({
-  userName: String,
+  username: String,
 });
 
 const logsSchema = new mongoose.Schema({
@@ -50,7 +50,7 @@ app.get("/", (req, res) => {
 //adding new user
 app.post("/api/users", async function (req, res) {
   const newUser = new user({
-    userName: req.body.username,
+    username: req.body.username,
   });
   await newUser.save();
   console.log(req.body.username);
@@ -80,7 +80,7 @@ app.post("/api/users/:_id/exercises", async function (req, res) {
   if (!old) {
     const log = new logs({
       _id: req.params._id,
-      username: usr.userName,
+      username: usr.username,
       count: 0,
       logs: [
         {
